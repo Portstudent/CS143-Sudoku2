@@ -46,17 +46,27 @@ public class SudokuBoard {
     }
    
    public boolean isValid() {
-      Set<Integer> rowSet = new HashSet<>();
+      Set<Integer> cSet = new HashSet<>();
+      Set<Integer> rSet = new HashSet<>();
+      int resetCounter = 0;
       for (int r = 0; r < board.length; r++) {
-         rowSet.clear();
+         cSet.clear();
          for (int c = 0; c < board[r].length; c++) {
-               if (rowSet.add(board[r][c]) != true && (board[r][c] != 0)) {
-                  return false;
+            if (cSet.add(board[r][c]) != true && (board[r][c] != 0)) {
+               return false;
+               }
+         }
+      }
+      for (int r = 0; r < board.length; r++) {
+         rSet.clear();
+         for (int c = 0; c < board[r].length; c++) {
+            if (rSet.add(board[r][c]) != true && (board[r][c] != 0)) {
+               return false;
                }
          }
       }
       return true;
-   }
+    }
        
     public String toString(){
         String output = "";
