@@ -34,6 +34,16 @@ public class SudokuBoard {
       return mini;
    }
 
+    private boolean checkData() {
+        for(int r = 0; r < board.length; r++){
+            for(int c = 0; c < board[r].length; c++)
+               if (board[r][c] < 0 && board[r][c] >9) {    
+                  return false;
+               } 
+            }
+        return true;
+   }    
+    
     
     private void clearBoard(){
         for(int r = 0; r < board.length; r++){
@@ -56,7 +66,6 @@ public class SudokuBoard {
             }
             row++;
         }
-
     }
    
    public boolean isValid() {
@@ -85,7 +94,7 @@ public class SudokuBoard {
       for (int spot = 1; spot <= board.length; spot++) {
          int[][] mini = miniSquare(spot);
          miniSet.clear();
-         for (int r = 0; r < 3; r++) {
+         for (int r = 0; r < 3; r++) { 
             for (int c = 0; c < 3; c++) {
                if (!miniSet.add(mini[r][c]) && mini[r][c] != 0) {
                   return false;
@@ -93,7 +102,8 @@ public class SudokuBoard {
             }
           }
        }
-       return true;
+       return checkData();
+       
     }
        
     public String toString(){
