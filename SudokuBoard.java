@@ -20,7 +20,21 @@ public class SudokuBoard {
         }
 
     }
+    
+      private int[][] miniSquare(int spot) {
+      int[][] mini = new int[3][3];
+      for(int r = 0; r < 3; r++) {
+         for(int c = 0; c < 3; c++) {
+            // whoa - wild! This took me a solid hour to figure out (at least)
+            // This translates between the "spot" in the 9x9 Sudoku board
+            // and a new mini square of 3x3
+            mini[r][c] = board[(spot - 1) / 3 * 3 + r][(spot - 1) % 3 * 3 + c];
+         }
+      }
+      return mini;
+   }
 
+    
     private void clearBoard(){
         for(int r = 0; r < board.length; r++){
             for(int c = 0; c < board[r].length; c++){
@@ -48,24 +62,38 @@ public class SudokuBoard {
    public boolean isValid() {
       Set<Integer> cSet = new HashSet<>();
       Set<Integer> rSet = new HashSet<>();
+      Set<Integer> miniSet = new HashSet<>();
       int resetCounter = 0;
       for (int r = 0; r < board.length; r++) {
          cSet.clear();
          for (int c = 0; c < board[r].length; c++) {
-            if (cSet.add(board[r][c]) != true && (board[r][c] != 0)) {
+            if (!cSet.add(board[r][c]) && (board[r][c] != 0)) {
                return false;
                }
          }
       }
+      
       for (int r = 0; r < board.length; r++) {
          rSet.clear();
          for (int c = 0; c < board[r].length; c++) {
-            if (rSet.add(board[r][c]) != true && (board[r][c] != 0)) {
+            if (!rSet.add(board[c][r]) && (board[c][r] != 0)) {
                return false;
                }
          }
       }
-      return true;
+      
+      for (int spot = 1; spot <= board.length; spot++) {
+         int[][] mini = miniSquare(spot);
+         miniSet.clear();
+         for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+               if (!miniSet.add(mini[r][c]) && mini[r][c] != 0) {
+                  return false;
+               }
+            }
+          }
+       }
+       return true;
     }
        
     public String toString(){
