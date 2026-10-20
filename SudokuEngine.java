@@ -1,7 +1,11 @@
 public class SudokuEngine {
     public static void main(String[] args) throws Exception {
-        SudokuBoard board = new SudokuBoard("data1.sdk");
-        System.out.print(board);
+        SudokuBoard board = new SudokuBoard("dirty-data.sdk");
+        
+        
+        System.out.println(board);
+        System.out.println(board.isValid());
+        System.out.println(board.isSolved());
     }
 }
 
