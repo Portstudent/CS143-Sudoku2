@@ -37,7 +37,7 @@ public class SudokuBoard {
     private boolean checkData() {
         for(int r = 0; r < board.length; r++){
             for(int c = 0; c < board[r].length; c++)
-               if (board[r][c] < 0 && board[r][c] >9) {    
+               if (board[r][c] < 0 || board[r][c] >9) {    
                   return false;
                } 
             }
@@ -105,7 +105,31 @@ public class SudokuBoard {
        return checkData();
        
     }
-       
+    
+   public boolean isSolved() {
+      HashMap<Integer, HashSet<Integer>> rowCheck = new HashMap<>();
+      HashMap<Integer, Integer> columnCheck = new HashMap<>();
+      for (int r = 0; r < board.length; r++) {
+         rowCheck.put(r, new HashSet<>());
+         for (int c = 0; c < board[r].length; c++) {
+            if (rowCheck.get(r).contains(board[r][c])) {
+               return false;
+            }
+            rowCheck.get(r).add(board[r][c]);
+         }
+      }
+      for (int r = 0; r < board.length; r++) {
+         rowCheck.put(r, new HashSet<>());
+         for (int c = 0; c < board[r].length; c++) {
+            if (rowCheck.get(r).contains(board[c][r])) {
+               return false;
+            }
+            rowCheck.get(r).add(board[c][r]);
+         }
+      }
+      return true;
+   }
+    
     public String toString(){
         String output = "";
 
