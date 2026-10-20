@@ -60,8 +60,10 @@ public class SudokuBoard {
             for(int i = 0; i < line.length(); i++){
                 if(Character.isDigit(line.charAt(i))){
                     board[row][i] = Character.getNumericValue(line.charAt(i));
-                } else {
+                } else if (line.charAt(i) == '.') {
                     board[row][i] = 0;
+                } else {
+                    board[row][i] = -1;
                 }
             }
             row++;
